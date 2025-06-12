@@ -71,11 +71,8 @@ textarea:focus {
     border-radius: 50%; cursor: pointer; font-weight: bold; line-height: 18px; text-align: center;
 }
 
-/* --- CORRECCIÓN DE ALINEACIÓN --- */
 .algorithm-selector-wrapper {
-    display: flex;
-    align-items: center; /* Vertically aligns label and select box */
-    gap: 8px; /* Adds space between label and select box */
+    display: flex; align-items: center; gap: 8px;
 }
 #hash-algorithm { padding: 8px; border-radius: 5px; border: 1px solid var(--border-color); }
 
@@ -109,4 +106,15 @@ textarea:focus {
 @media (max-width: 900px) {
     .hash-generator-container { flex-direction: column; }
     textarea { height: 200px; }
+}
+
+/* --- NUEVA REGLA PARA MÓVILES PEQUEÑOS --- */
+@media (max-width: 500px) {
+    .controls-container {
+        flex-direction: column; /* Apila los controles verticalmente */
+        align-items: stretch;   /* Hace que ambos ocupen todo el ancho disponible */
+    }
+    .algorithm-selector-wrapper {
+        justify-content: space-between; /* Espacia la etiqueta y el selector */
+    }
 }
