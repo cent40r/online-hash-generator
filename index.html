@@ -3,115 +3,109 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Online Hash Generator - Free & Instant</title>
-    <meta name="description" content="Free online tool to generate a wide variety of hashes including MD5, SHA-256, SHA-512, RipeMD, and more from text or files. Secure, fast, and easy to use.">
+    <title>Online Hash Generator - Free & Secure Hashing Tool</title>
+    <meta name="description" content="A comprehensive, free online tool to generate a wide variety of hashes (SHA-256, MD5, etc.) from text or files. Learn about hashing, security, and data integrity.">
     <link rel="stylesheet" href="style.css">
 
-    <!-- TU CÓDIGO DE VERIFICACIÓN DE ADSENSE (SI YA LO TIENES) VA AQUÍ -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
+    <!-- Google AdSense Publisher Code -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5409295794067694"
      crossorigin="anonymous"></script>
     
+    <!-- CryptoJS Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
 </head>
 <body>
 
     <header>
-        <h1>Online Hash Generator</h1>
-        <p>A free tool to compute hashes from text or files instantly.</p>
+        <div class="header-content">
+            <h1>Online Hash Generator</h1>
+		<nav>
+                <a href="#tool-section">Tool</a>
+                <a href="#about-section">About</a>
+                <a href="#learning-center">Learning Center</a>
+            </nav>
+        </div>
     </header>
 
-    <div class="page-layout">
-        <aside class="ad-sidebar left-ad"><p>Left Ad Area</p></aside>
-
-        <main>
-            <section id="tool-section">
-                <div class="hash-generator-container">
-                    
-                    <div class="column input-column">
-                        <h2>Input</h2>
-                        <textarea id="text-input" placeholder="Type or paste your text here..."></textarea>
-                        
-                        <div class="controls-container">
-                            <div class="file-input-wrapper">
-                                <label for="file-input" class="file-input-label">Upload File</label>
-                                <input type="file" id="file-input" accept=".txt,.json,.xml,.html,.css,.js,.csv,.*">
-                                <div id="file-info" class="hidden">
-                                    <span id="file-name"></span>
-                                    <button id="clear-file-btn" title="Remove file">×</button>
-                                </div>
-                            </div>
-
-                            <div class="algorithm-selector-wrapper">
-                                <label for="hash-algorithm">Algorithm:</label>
-                                <select id="hash-algorithm">
-                                    <optgroup label="MD Family">
-                                        <option value="MD5" selected>MD5</option>
-                                    </optgroup>
-                                    <optgroup label="RipeMD Family">
-                                        <option value="RIPEMD160">RipeMD-160</option>
-                                    </optgroup>
-                                     <optgroup label="SHA-1 & SHA-2">
-                                        <option value="SHA1">SHA-1</option>
-                                        <option value="SHA224">SHA-224</option>
-                                        <option value="SHA256">SHA-256</option>
-                                        <option value="SHA384">SHA-384</option>
-                                        <option value="SHA512">SHA-512</option>
-                                    </optgroup>
-                                    <optgroup label="SHA-3">
-                                        <option value="SHA3-224">SHA3 (224-bit)</option>
-                                        <option value="SHA3-256">SHA3 (256-bit)</option>
-                                        <option value="SHA3-384">SHA3 (384-bit)</option>
-                                        <option value="SHA3-512">SHA3 (512-bit)</option>
-                                    </optgroup>
-                                    <optgroup label="CRC & Other">
-                                        <option value="CRC16">CRC-16</option>
-                                        <option value="CRC32">CRC-32</option>
-                                        <option value="Adler32">Adler-32</option>
-                                    </optgroup>
-                                </select>
+    <main class="main-container">
+        <!-- The Hashing Tool -->
+        <section id="tool-section">
+            <div class="hash-generator-container">
+                <div class="column input-column">
+                    <h2>Input</h2>
+                    <textarea id="text-input" placeholder="Type or paste your text here..."></textarea>
+                    <div class="controls-container">
+                        <div class="file-input-wrapper">
+                            <label for="file-input" class="file-input-label">Upload File</label>
+                            <input type="file" id="file-input" accept=".txt,.json,.xml,.html,.css,.js,.csv,.*">
+                            <div id="file-info" class="hidden">
+                                <span id="file-name"></span>
+                                <button id="clear-file-btn" title="Remove file">×</button>
                             </div>
                         </div>
+                        <div class="algorithm-selector-wrapper">
+                            <label for="hash-algorithm">Algorithm:</label>
+                            <select id="hash-algorithm">
+                                <optgroup label="MD Family"><option value="MD5" selected>MD5</option></optgroup>
+                                <optgroup label="RipeMD Family"><option value="RIPEMD160">RipeMD-160</option></optgroup>
+                                <optgroup label="SHA-1 & SHA-2"><option value="SHA1">SHA-1</option><option value="SHA224">SHA-224</option><option value="SHA256">SHA-256</option><option value="SHA384">SHA-384</option><option value="SHA512">SHA-512</option></optgroup>
+                                <optgroup label="SHA-3"><option value="SHA3-224">SHA3 (224-bit)</option><option value="SHA3-256">SHA3 (256-bit)</option><option value="SHA3-384">SHA3 (384-bit)</option><option value="SHA3-512">SHA3 (512-bit)</option></optgroup>
+                                <optgroup label="CRC & Other"><option value="CRC16">CRC-16</option><option value="CRC32">CRC-32</option><option value="Adler32">Adler-32</option></optgroup>
+                            </select>
+                        </div>
                     </div>
-
-                    <div class="column action-column">
-                        <button id="generate-btn">Generate</button>
-                    </div>
-
-                    <div class="column output-column">
-                        <h2>Hash Output</h2>
-                        <textarea id="hash-output" readonly placeholder="Your generated hash will appear here..."></textarea>
-                    </div>
-
                 </div>
-            </section>
+                <div class="column action-column">
+                    <button id="generate-btn">Generate</button>
+                </div>
+                <div class="column output-column">
+                    <h2>Hash Output</h2>
+                    <textarea id="hash-output" readonly placeholder="Your generated hash will appear here..."></textarea>
+                </div>
+            </div>
+        </section>
 
-            <section class="ad-placeholder-horizontal"><p>Horizontal Advertisement Area</p></section>
+        <!-- About Section -->
+        <section id="about-section" class="content-section">
+            <h2>About Our Online Hash Generator</h2>
+            <p>In a digital world, data integrity and security are paramount. Our Online Hash Generator is a free, powerful, and client-side tool designed for developers, security professionals, and anyone needing to generate cryptographic hashes quickly and securely. "Client-side" means all calculations are performed directly on your computer, in your browser. <strong>None of your data, whether it's typed text or an uploaded file, is ever sent to our servers.</strong> Your privacy is absolute.</p>
+            <p>This tool provides a wide range of hashing algorithms, from the widely-used SHA-256 to checksum functions like CRC32. Whether you need to verify a file's integrity after a download, create a hash for password storage, or simply study how different algorithms work, our tool offers a reliable and easy-to-use interface for all your hashing needs.</p>
+        </section>
 
-            <section id="content-section">
-                <h2>Understanding Hash Functions</h2>
-                <article>
-                    <h3>Origins, Evolution, and Current State</h3>
-                    <p>A hash function is any function that can be used to map data of arbitrary size to fixed-size values. The values returned by a hash function are called hash values, hash codes, digests, or simply hashes. The origins of hashing date back to the 1950s in computer science for data retrieval in hash tables. Early algorithms were simple and designed for speed in database lookups. As the need for data integrity and security grew, cryptographic hash functions were developed. Algorithms like MD5 (Message Digest 5), created in 1991, became industry standards. However, vulnerabilities were discovered, leading to the development of more secure families like SHA (Secure Hash Algorithm). Today, the SHA-2 and SHA-3 families are the recommended standards for most security applications, while older algorithms like MD5 and SHA-1 are considered broken and should only be used for non-security purposes like checksums.</p>
-                </article>
-                <article>
-                    <h3>The Importance of Hashing in Security</h3>
-                    <p>In the context of cybersecurity, cryptographic hash functions are fundamental. Their primary use is to verify the integrity of data. If you download a file and the provider gives you its hash, you can calculate the hash of the downloaded file yourself. If your calculated hash matches the one provided, you can be confident the file was not altered during transit. Another critical application is password storage. Websites should never store user passwords in plaintext. Instead, they store the hash of the password. When a user tries to log in, the system hashes the entered password and compares it to the stored hash. This ensures that even if a database is breached, attackers cannot see the actual passwords.</p>
-                </article>
-                <article>
-                    <h3>The Importance of Hashing in Other Fields</h3>
-                    <p>Hashing is not just for security. It's a core concept in computer science with wide-ranging applications. In databases, hash indexes allow for incredibly fast data retrieval. In distributed systems and blockchains (like Bitcoin), hashing is used to create an immutable chain of records, ensuring that once a transaction is added, it cannot be changed. Hash functions are also used for detecting duplicate data (deduplication) in storage systems, caching data to speed up web applications, and in the implementation of data structures like hash sets and hash maps, which are ubiquitous in modern programming.</p>
-                </article>
-            </section>
-        </main>
-        
-        <aside class="ad-sidebar right-ad"><p>Right Ad Area</p></aside>
-    </div>
+        <!-- Learning Center Section -->
+        <section id="learning-center" class="content-section">
+            <h2>Learning Center: Understanding Hash Functions</h2>
+            
+            <article>
+                <h3>Origins, Evolution, and Current State</h3>
+                <p>A hash function is any function that can be used to map data of arbitrary size to fixed-size values. The values returned by a hash function are called hash values, hash codes, digests, or simply hashes. The origins of hashing date back to the 1950s in computer science for data retrieval in hash tables. Early algorithms were simple and designed for speed in database lookups. As the need for data integrity and security grew, cryptographic hash functions were developed. Algorithms like MD5 (Message Digest 5), created in 1991, became industry standards. However, vulnerabilities were discovered, leading to the development of more secure families like SHA (Secure Hash Algorithm). Today, the SHA-2 and SHA-3 families are the recommended standards for most security applications, while older algorithms like MD5 and SHA-1 are considered broken and should only be used for non-security purposes like checksums.</p>
+            </article>
+            <article>
+                <h3>What is "Salting" in Password Hashing?</h3>
+                <p>You should never hash a password directly. If two users have the same password, "password123", they would have the same hash. An attacker could use a "rainbow table" (a pre-computed list of hashes for common passwords) to find a match instantly. To prevent this, we use a "salt". A salt is a unique, random string of characters that is added to each password before it's hashed. So, "password123" + "salt_for_user_A" results in a completely different hash than "password123" + "salt_for_user_B". The salt is stored alongside the hash in the database. This makes rainbow table attacks ineffective and dramatically increases password security.</p>
+            </article>
+            <article>
+                <h3>MD5 vs. SHA-256: Which One Should I Use?</h3>
+                <p>This is a common question. While both are hash functions, they belong to different generations of security. <strong>MD5 is considered broken and cryptographically insecure.</strong> It is fast, but it's vulnerable to "collision attacks," where two different inputs can produce the same hash. It should NOT be used for security purposes like password storage or digital signatures. Its only modern use is for non-security tasks, like generating a checksum to verify file integrity against accidental corruption.</p>
+                <p><strong>SHA-256 (part of the SHA-2 family) is the current industry standard.</strong> It is secure, robust, and has no known major vulnerabilities. For any application that requires security (password hashing, digital certificates, blockchain), you should always choose a member of the SHA-2 or SHA-3 family. While slightly slower than MD5, the security it provides is non-negotiable.</p>
+            </article>
+             <article>
+                <h3>The Importance of Hashing in Security</h3>
+                <p>In the context of cybersecurity, cryptographic hash functions are fundamental. Their primary use is to verify the integrity of data. If you download a file and the provider gives you its hash, you can calculate the hash of the downloaded file yourself. If your calculated hash matches the one provided, you can be confident the file was not altered during transit. Another critical application is password storage. Websites should never store user passwords in plaintext. Instead, they store the hash of the password. When a user tries to log in, the system hashes the entered password and compares it to the stored hash. This ensures that even if a database is breached, attackers cannot see the actual passwords.</p>
+            </article>
+            <article>
+                <h3>Are Hashes Reversible?</h3>
+                <p>By design, cryptographic hash functions are one-way streets. They are not "encryption," which is a two-way process (encrypt/decrypt). You cannot take a hash output and mathematically "reverse" it to find the original input. This is a fundamental principle of their security. However, this doesn't mean passwords stored as hashes are perfectly safe. Attackers don't try to reverse the hash; they try to find a match. They do this by taking a massive list of common passwords (a "dictionary attack"), hashing each one, and comparing the result to the stolen hash. This is why using long, complex, and unique passwords is so important—it makes it virtually impossible for an attacker to guess the input that creates your specific hash.</p>
+            </article>
+        </section>
+    </main>
     
     <footer>
         <p>© 2025 onlinehashgenerator.com - All Rights Reserved.</p>
         <p><a href="/privacy.html">Privacy Policy</a> | <a href="/terms.html">Terms and Conditions</a></p>
     </footer>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <!-- Moved custom script to the end of the body for robust execution -->
     <script src="script.js"></script>
 
 </body>
