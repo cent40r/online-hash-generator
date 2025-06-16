@@ -7,10 +7,7 @@
     --container-bg: #fdfdfd;
 }
 
-html {
-    scroll-behavior: smooth;
-}
-
+html { scroll-behavior: smooth; }
 *, *::before, *::after { box-sizing: border-box; }
 
 body {
@@ -21,201 +18,128 @@ body {
     line-height: 1.6;
 }
 
+/* --- Header & Navigation --- */
 header { 
-    background-color: var(--bg-color);
-    padding: 1rem 2rem;
-    border-bottom: 1px solid var(--border-color);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
+    background-color: var(--bg-color); padding: 1rem 2rem;
+    border-bottom: 1px solid var(--border-color); box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    position: sticky; top: 0; z-index: 1000;
 }
-
 .header-content {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    max-width: 1000px; margin: 0 auto; display: flex;
+    justify-content: space-between; align-items: center;
 }
-
 header h1 {
-    margin: 0;
-    font-size: 1.5rem;
-    color: var(--primary-color);
+    margin: 0; font-size: 1.5rem; color: var(--primary-color);
 }
-
 header nav a {
-    margin-left: 20px;
-    text-decoration: none;
-    color: #495057;
-    font-weight: 500;
-    transition: color 0.2s ease-in-out;
+    margin-left: 20px; text-decoration: none; color: #495057;
+    font-weight: 500; transition: color 0.2s ease-in-out;
 }
-header nav a:hover {
-    color: var(--primary-color);
-}
+header nav a:hover { color: var(--primary-color); }
 
+/* --- Main Layout & Content --- */
 .main-container {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 2rem 1rem;
+    max-width: 900px; margin: 0 auto; padding: 2rem 1rem;
 }
-
 section {
+    padding-top: 2rem; /* Adds space for the sticky header */
+    margin-top: -2rem; /* Negative margin to compensate for padding */
+}
+section[id] {
+    scroll-margin-top: 80px;
+}
+h2 {
+    font-size: 1.8rem; color: #343a40;
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 10px; margin-bottom: 1.5rem;
+}
+h3 { font-size: 1.3rem; margin-top: 1.5rem; color: #495057; }
+
+/* --- Tool Styles --- */
+.hash-generator-container {
+    display: flex; gap: 20px; padding: 20px; background-color: var(--container-bg);
+    border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);
     margin-bottom: 3rem;
 }
-
-/* --- NOVA REGLA PER SOLUCIONAR EL PROBLEMA DE NAVEGACIÓ --- */
-section[id] {
-    scroll-margin-top: 80px; /* Aquest valor ha de ser una mica més gran que l'alçada de la capçalera */
-}
-
-h2 {
-    font-size: 1.5rem;
-    color: #343a40;
-    border-bottom: 2px solid var(--primary-color);
-    padding-bottom: 10px;
-    margin-bottom: 1.5rem;
-}
-
-.hash-generator-container {
-    display: flex; 
-    gap: 20px; 
-    padding: 20px; 
-    background-color: var(--container-bg);
-    border: 1px solid var(--border-color); 
-    border-radius: 8px; 
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-}
-
 .column { display: flex; flex-direction: column; }
 .input-column, .output-column { flex: 1; }
 .action-column {
-    flex-grow: 0; 
-    flex-shrink: 0; 
-    justify-content: center; 
-    align-items: center;
+    flex-grow: 0; flex-shrink: 0; justify-content: center; align-items: center;
 }
-
 textarea {
-    width: 100%; 
-    height: 250px; 
-    padding: 10px; 
-    border: 1px solid var(--border-color);
-    border-radius: 5px; 
-    font-family: "Courier New", Courier, monospace;
-    font-size: 0.9rem; 
-    resize: vertical;
+    width: 100%; height: 250px; padding: 10px; border: 1px solid var(--border-color);
+    border-radius: 5px; font-family: "Courier New", Courier, monospace;
+    font-size: 0.9rem; resize: vertical;
 }
 textarea:focus {
-    outline: none; 
-    border-color: var(--primary-color); 
-    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+    outline: none; border-color: var(--primary-color); box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
 }
-
 .controls-container {
-    margin-top: 15px; 
-    display: flex; 
-    justify-content: space-between;
-    align-items: flex-start; 
-    gap: 20px;
+    margin-top: 15px; display: flex; justify-content: space-between;
+    align-items: flex-start; gap: 20px;
+    flex-wrap: wrap; /* Allows items to wrap to the next line on small screens */
 }
-
-.file-input-wrapper { position: relative; display: inline-block; }
+.file-input-wrapper { 
+    position: relative; 
+    display: inline-block;
+    /* --- NOVA REGLA PER SOLUCIONAR EL PROBLEMA --- */
+    white-space: nowrap; /* Evita que el text del botó es trenqui */
+}
 .file-input-label {
-    background-color: #6c757d; 
-    color: white; 
-    padding: 8px 15px;
-    border-radius: 5px; 
-    cursor: pointer;
+    background-color: #6c757d; color: white; padding: 8px 15px;
+    border-radius: 5px; cursor: pointer;
 }
 .file-input-label:hover { background-color: #5a6268; }
 #file-input { display: none; }
 #file-info { display: flex; align-items: center; gap: 10px; margin-top: 10px; font-size: 0.9em; }
 #clear-file-btn {
-    background: #dc3545; 
-    color: white; 
-    border: none; 
-    width: 20px; 
-    height: 20px;
-    border-radius: 50%; 
-    cursor: pointer; 
-    font-weight: bold; 
-    line-height: 18px; 
-    text-align: center;
+    background: #dc3545; color: white; border: none; width: 20px; height: 20px;
+    border-radius: 50%; cursor: pointer; font-weight: bold; line-height: 18px; text-align: center;
 }
-
 .algorithm-selector-wrapper { display: flex; align-items: center; gap: 8px; }
 #hash-algorithm { padding: 8px; border-radius: 5px; border: 1px solid var(--border-color); }
-
 #generate-btn {
-    background-color: var(--primary-color); 
-    color: white; 
-    border: none;
-    padding: 15px 30px; 
-    font-size: 1.1rem; 
-    font-weight: bold;
-    border-radius: 50px; 
-    cursor: pointer; 
-    transition: background-color 0.2s ease;
+    background-color: var(--primary-color); color: white; border: none;
+    padding: 15px 30px; font-size: 1.1rem; font-weight: bold;
+    border-radius: 50px; cursor: pointer; transition: background-color 0.2s ease;
 }
 #generate-btn:hover { background-color: #0056b3; }
-
 .hidden { display: none !important; }
 
+/* --- Content & FAQ Section Styles --- */
 .content-section {
-    padding: 20px;
-    background-color: var(--bg-color);
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
+    padding: 2rem; background-color: var(--bg-color);
+    border: 1px solid var(--border-color); border-radius: 8px;
+    margin-bottom: 2rem;
 }
+.section-intro { font-size: 1.1rem; color: #495057; }
+.content-section article { margin-bottom: 2.5rem; }
+.content-section article:last-child { margin-bottom: 0; }
+.content-section ul { padding-left: 20px; }
+.content-section li { margin-bottom: 0.5rem; }
+.faq-item { margin-bottom: 1.5rem; }
+.faq-item h3 { border-bottom: none; font-size: 1.2rem; padding: 0; margin: 0 0 0.5rem 0; }
 
-.content-section article { 
-    margin-bottom: 2rem; 
-}
-.content-section article:last-child {
-    margin-bottom: 0;
-}
-.content-section h3 {
-    margin-bottom: 0.5rem;
-    color: #495057;
-}
-
+/* --- Footer --- */
 footer { 
-    text-align: center; 
-    margin-top: 3rem;
-    padding: 2rem;
-    border-top: 1px solid var(--border-color);
-    color: #6c757d;
+    text-align: center; margin-top: 3rem; padding: 2rem;
+    border-top: 1px solid var(--border-color); color: #6c757d;
 }
-footer a {
-    color: #6c757d;
-}
+footer a { color: #6c757d; }
 
 /* --- Responsive Design --- */
 @media (max-width: 900px) {
     .hash-generator-container { flex-direction: column; }
-    textarea { height: 200px; }
 }
-
 @media (max-width: 600px) {
-    .header-content {
-        flex-direction: column;
-        gap: 10px;
-    }
-    .main-container {
-        padding: 1rem;
-    }
+    .header-content { flex-direction: column; gap: 10px; }
+    .main-container { padding: 1rem; }
     .controls-container {
-        flex-direction: column;
+        flex-direction: column; 
         align-items: stretch;
     }
-    .algorithm-selector-wrapper {
-        justify-content: space-between;
+    .algorithm-selector-wrapper { 
+        justify-content: space-between; 
     }
-    /* S'ajusta el marge de scroll per a la capçalera més alta en mòbils */
-    section[id] {
-        scroll-margin-top: 120px; 
-    }
+    section[id] { scroll-margin-top: 120px; }
 }
