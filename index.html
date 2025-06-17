@@ -7,8 +7,11 @@
     <meta name="description" content="The ultimate free online tool to generate a wide variety of hashes. Learn about hashing, security, file integrity, and best practices with our comprehensive guide and FAQ.">
     <link rel="canonical" href="https://onlinehashgenerator.com/" />
     <link rel="stylesheet" href="style.css">
-    <!-- AdSense Code -->
-    <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5409295794067694" crossorigin="anonymous"></script> -->
+    <!-- AdSense Code (dejado para futura solicitud) -->
+    <!-- 
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5409295794067694" 
+     crossorigin="anonymous"></script>
+    -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
 </head>
 <body>
@@ -64,9 +67,18 @@
         <!-- Learning Center Section -->
         <section id="learning-center" class="content-section">
             <h2>Understanding Cryptographic Hashes</h2>
-            <p class="section-intro">A hash function is a cornerstone of modern cybersecurity. It's a mathematical algorithm that takes an input (like a file or a password) and produces a fixed-size string of characters, which is unique to that input. This output is called a "hash" or a "digest". Our tool allows you to explore this concept with the most widely used algorithms.</p>
+            <p class="section-intro">A hash function is a cornerstone of modern cybersecurity. It's a mathematical algorithm that takes an input (like a file or a password) and produces a fixed-size string of characters, which is unique to that input. This output is called a "hash" or a "digest". Our tool allows you to explore this concept with the most widely used algorithms. Dive deeper into the world of hashing with our comprehensive articles:</p>
             
-            <article>
+            <div class="article-promo-grid">
+                 <a href="/articles/what-is-hashing.html" class="article-promo-card">
+                    <h3>What is Hashing? A Beginner's Guide</h3>
+                    <p>Start here to understand the fundamental concepts, properties, and common uses of hashing in an easy-to-understand way.</p>
+                    <span class="read-more">Read Full Article →</span>
+                </a>
+                <!-- Future article promo cards will go here -->
+            </div>
+            
+            <article> <!-- This is the old "Practical Use Cases" section, now integrated -->
                 <h3>Practical Use Cases for a Hash Generator</h3>
                 <ul>
                     <li><strong>Verifying File Integrity:</strong> After downloading a file, compare its calculated hash with the one provided by the source. If they match, the file is not corrupt or altered.</li>
@@ -77,16 +89,13 @@
                 </ul>
             </article>
 
+            <!-- Other articles from the original index.html can be condensed or linked as separate articles later -->
+            <!-- Example:
             <article>
                 <h3>MD5 vs. SHA-256: Which One Should I Use?</h3>
-                <p>This is a common question. While both are hash functions, they belong to different generations of security. <strong>MD5 is considered broken and cryptographically insecure.</strong> It is fast, but it's vulnerable to "collision attacks," where two different inputs can produce the same hash. It should NOT be used for security purposes like password storage or digital signatures. Its only modern use is for non-security tasks, like generating a checksum to verify file integrity against accidental corruption.</p>
-                <p><strong>SHA-256 (part of the SHA-2 family) is the current industry standard.</strong> It is secure, robust, and has no known major vulnerabilities. For any application that requires security (password hashing, digital certificates, blockchain), you should always choose a member of the SHA-2 or SHA-3 family. While slightly slower than MD5, the security it provides is non-negotiable.</p>
+                <p>A brief comparison... <a href="/articles/md5-vs-sha256.html">Read more</a>.</p> 
             </article>
-
-            <article>
-                <h3>What is "Salting" in Password Hashing?</h3>
-                <p>You should never hash a password directly. If two users have the same password, "password123", they would have the same hash. An attacker could use a "rainbow table" (a pre-computed list of hashes for common passwords) to find a match instantly. To prevent this, we use a "salt". A salt is a unique, random string of characters that is added to each password before it's hashed. So, "password123" + "salt_for_user_A" results in a completely different hash than "password123" + "salt_for_user_B". The salt is stored alongside the hash in the database. This makes rainbow table attacks ineffective and dramatically increases password security.</p>
-            </article>
+            -->
         </section>
 
         <!-- FAQ Section -->
@@ -98,7 +107,7 @@
             </div>
             <div class="faq-item">
                 <h3>2. What is the difference between Hashing and Encryption?</h3>
-                <p>Hashing is a one-way process; you cannot reverse a hash to get the original input. Encryption is a two-way process; data that is encrypted can be decrypted with the correct key. Hashing is used for integrity and verification, while encryption is used for confidentiality.</p>
+                <p>Hashing is a one-way process; you cannot reverse a hash to get the original input. Encryption is a two-way process; data that is encrypted can be decrypted back into its original form using the correct key. Hashing is used for integrity and verification, while encryption is used for confidentiality.</p>
             </div>
             <div class="faq-item">
                 <h3>3. Can two different files have the same hash?</h3>

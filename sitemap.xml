@@ -2,17 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://onlinehashgenerator.com/</loc>
-    <lastmod>2025-06-16</lastmod> 
+    <lastmod>2025-06-17</lastmod> <!-- Posa la data d'avui o de l'última modificació -->
     <priority>1.00</priority>
   </url>
   <url>
+    <loc>https://onlinehashgenerator.com/articles/what-is-hashing.html</loc>
+    <lastmod>2025-06-17</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <!-- Quan afegeixis més articles, posa'ls aquí -->
+  <url>
     <loc>https://onlinehashgenerator.com/privacy.html</loc>
-    <lastmod>2025-06-16</lastmod>
+    <lastmod>2025-06-17</lastmod>
     <priority>0.10</priority>
   </url>
   <url>
     <loc>https://onlinehashgenerator.com/terms.html</loc>
-    <lastmod>2025-06-16</lastmod>
+    <lastmod>2025-06-17</lastmod>
     <priority>0.10</priority>
   </url>
 </urlset>
