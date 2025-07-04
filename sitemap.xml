@@ -1,24 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Main Page -->
   <url>
     <loc>https://onlinehashgenerator.com/</loc>
-    <lastmod>2025-06-17</lastmod> <!-- Posa la data d'avui o de l'última modificació -->
+    <lastmod>2025-06-18</lastmod> 
     <priority>1.00</priority>
   </url>
+  <!-- Articles -->
   <url>
     <loc>https://onlinehashgenerator.com/articles/what-is-hashing.html</loc>
-    <lastmod>2025-06-17</lastmod>
+    <lastmod>2025-06-18</lastmod>
     <priority>0.80</priority>
   </url>
-  <!-- Quan afegeixis més articles, posa'ls aquí -->
   <url>
-    <loc>https://onlinehashgenerator.com/privacy.html</loc>
-    <lastmod>2025-06-17</lastmod>
-    <priority>0.10</priority>
-  </url>
-  <url>
-    <loc>https://onlinehashgenerator.com/terms.html</loc>
-    <lastmod>2025-06-17</lastmod>
-    <priority>0.10</priority>
+    <loc>https://onlinehashgenerator.com/articles/what-is-bcrypt.html</loc>
+    <lastmod>2025-06-18</lastmod>
+    <priority>0.80</priority>
   </url>
 </urlset>

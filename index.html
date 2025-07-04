@@ -21,7 +21,7 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5409295794067694" 
      crossorigin="anonymous"></script>
     -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>
 </head>
 <body>
     <header>
@@ -54,11 +54,28 @@
                         <div class="algorithm-selector-wrapper">
                             <label for="hash-algorithm">Algorithm:</label>
                             <select id="hash-algorithm">
-                                <optgroup label="MD Family"><option value="MD5" selected>MD5</option></optgroup>
-                                <optgroup label="RipeMD Family"><option value="RIPEMD160">RipeMD-160</option></optgroup>
-                                <optgroup label="SHA-1 & SHA-2"><option value="SHA1">SHA-1</option><option value="SHA224">SHA-224</option><option value="SHA256">SHA-256</option><option value="SHA384">SHA-384</option><option value="SHA512">SHA-512</option></optgroup>
-                                <optgroup label="SHA-3"><option value="SHA3-224">SHA3 (224-bit)</option><option value="SHA3-256">SHA3 (256-bit)</option><option value="SHA3-384">SHA3 (384-bit)</option><option value="SHA3-512">SHA3 (512-bit)</option></optgroup>
-                                <optgroup label="CRC & Other"><option value="CRC16">CRC-16</option><option value="CRC32">CRC-32</option><option value="Adler32">Adler-32</option></optgroup>
+                                <optgroup label="Common / Secure">
+                                    <option value="SHA256" selected>SHA-256</option>
+                                    <option value="SHA512">SHA-512</option>
+                                    <option value="SHA3-512">SHA3-512</option>                                    
+                                </optgroup>
+                                <optgroup label="Legacy / Insecure">
+                                    <option value="MD5">MD5 <span class="warning-icon" title="MD5 is cryptographically broken and should not be used for security purposes.">⚠️</span></option>
+                                    <option value="SHA1">SHA-1 <span class="warning-icon" title="SHA-1 is no longer considered secure against well-funded attackers.">⚠️</span></option>
+                                </optgroup>
+                                <optgroup label="Other">
+                                    <option value="SHA224">SHA-224</option>
+                                    <option value="SHA384">SHA-384</option>
+                                    <option value="SHA3-224">SHA3 (224-bit)</option>
+                                    <option value="SHA3-256">SHA3 (256-bit)</option>
+                                    <option value="SHA3-384">SHA3 (384-bit)</option>
+                                    <option value="RIPEMD160">RipeMD-160</option>
+                                </optgroup>
+                                <optgroup label="Checksums (Non-Cryptographic)">
+                                    <option value="CRC16">CRC-16</option>
+                                    <option value="CRC32">CRC-32</option>
+                                    <option value="Adler32">Adler-32</option>
+                                </optgroup>
                             </select>
                         </div>
                     </div>
@@ -83,8 +100,13 @@
                     <h3>What is Hashing? A Beginner's Guide</h3>
                     <p>Start here to understand the fundamental concepts, properties, and common uses of hashing in an easy-to-understand way.</p>
                     <span class="read-more">Read Full Article →</span>
-                </a>
-                <!-- Future article promo cards will go here -->
+                </a>  
+
+                <a href="/articles/what-is-bcrypt.html" class="article-promo-card">
+                    <h3>What is Bcrypt? A Guide to Modern Password Hashing</h3>
+                    <p>Learn why fast hashes aren't enough for passwords and how Bcrypt's deliberate slowness makes it a cornerstone of modern security.</p>
+                    <span class="read-more">Read Full Article →</span>
+                </a>              
             </div>
             
             <article> <!-- This is the old "Practical Use Cases" section, now integrated -->

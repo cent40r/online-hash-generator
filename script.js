@@ -1,13 +1,11 @@
-// --- Self-contained Hashing Functions (No external libraries needed for these) ---
-
-// CRC-32
+// --- Funcions Self-contained per a CRC i Adler32 (Fiables) ---
 function crc32(str) {
     let crc = -1;
     for (let i = 0, iTop = str.length; i < iTop; i++) {
         crc = (crc >>> 8) ^ crc32_table[(crc ^ str.charCodeAt(i)) & 0xFF];
     }
     return (crc ^ -1) >>> 0;
-};
+}
 const crc32_table = (() => {
     let c, table = [];
     for (let n = 0; n < 256; n++) {
@@ -19,8 +17,6 @@ const crc32_table = (() => {
     }
     return table;
 })();
-
-// CRC-16 (Kermit)
 function crc16(str) {
     let crc = 0;
     for (let i = 0; i < str.length; i++) {
@@ -32,8 +28,6 @@ function crc16(str) {
     }
     return crc & 0xFFFF;
 }
-
-// Adler-32
 function adler32(str) {
     const MOD_ADLER = 65521;
     let a = 1, b = 0;
@@ -44,7 +38,7 @@ function adler32(str) {
     return (b << 16) | a;
 }
 
-// --- DOM Element References (Executing directly, no 'DOMContentLoaded' needed) ---
+// --- Lògica principal de l'aplicació ---
 const textInput = document.getElementById('text-input');
 const fileInput = document.getElementById('file-input');
 const fileInfo = document.getElementById('file-info');
@@ -53,10 +47,8 @@ const clearFileBtn = document.getElementById('clear-file-btn');
 const algorithmSelect = document.getElementById('hash-algorithm');
 const generateBtn = document.getElementById('generate-btn');
 const hashOutput = document.getElementById('hash-output');
-
 const MAX_FILE_SIZE_MB = 10;
 
-// --- Event Listeners ---
 fileInput.addEventListener('change', (event) => {
     const file = event.target.files[0];
     if (!file) return;
@@ -77,7 +69,6 @@ fileInput.addEventListener('change', (event) => {
 clearFileBtn.addEventListener('click', clearFile);
 generateBtn.addEventListener('click', generateHash);
 
-// --- Core Functions ---
 function clearFile() {
     fileInput.value = '';
     fileNameSpan.textContent = '';
@@ -93,6 +84,7 @@ function generateHash() {
     try {
         let hash;
         switch (algorithm) {
+            // Algorismes de CryptoJS (Fiables)
             case 'MD5':       hash = CryptoJS.MD5(inputText).toString(); break;
             case 'SHA1':      hash = CryptoJS.SHA1(inputText).toString(); break;
             case 'SHA256':    hash = CryptoJS.SHA256(inputText).toString(); break;
@@ -104,8 +96,8 @@ function generateHash() {
             case 'SHA3-384':  hash = CryptoJS.SHA3(inputText, { outputLength: 384 }).toString(); break;
             case 'SHA3-512':  hash = CryptoJS.SHA3(inputText, { outputLength: 512 }).toString(); break;
             case 'RIPEMD160': hash = CryptoJS.RIPEMD160(inputText).toString(); break;
-            
-            // Calling local functions
+
+            // Funcions locals de CRC (Fiables)
             case 'CRC16':     hash = crc16(inputText).toString(16); break;
             case 'CRC32':     hash = crc32(inputText).toString(16); break;
             case 'Adler32':   hash = adler32(inputText).toString(16); break;
