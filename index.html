@@ -3,28 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Online Hash & Bcrypt Generator - Free & Secure Tool</title>
-    <meta name="description" content="The ultimate free online tool to generate and verify hashes. Supports MD5, SHA-256, and a full Bcrypt suite (hash & verify) for password security testing.">
-    <link rel="canonical" href="https://onlinehashgenerator.com/" />
-    <link rel="stylesheet" href="style.css">
-    
-    <!-- Libraries -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>
-    <!-- bcrypt.js will be loaded dynamically by script.js when needed -->
-
+    <title>Online Hash Generator - Free & Secure (MD5, SHA-256, SHA-512)</title>
+    <meta name="description" content="The ultimate free online tool to generate a wide variety of hashes. Learn about hashing, security, file integrity, and best practices with our comprehensive guide and FAQ.">
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-KR2QFJQ6PR"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
+
       gtag('config', 'G-KR2QFJQ6PR');
     </script>
+    <link rel="canonical" href="https://onlinehashgenerator.com/" />
+    <link rel="stylesheet" href="style.css">
+    <!-- AdSense Code (dejado para futura solicitud) -->
+    <!-- 
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5409295794067694" 
+     crossorigin="anonymous"></script>
+    -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>
 </head>
 <body>
     <header>
         <div class="header-content">
-            <h1><a href="/" style="text-decoration:none; color:inherit;">Online Hash Generator</a></h1>
+            <h1>Online Hash Generator</h1>
             <nav>
                 <a href="#tool-section">Tool</a>
                 <a href="#learning-center">Learn</a>
@@ -34,28 +36,12 @@
     </header>
 
     <main class="main-container">
+        <!-- The Hashing Tool -->
         <section id="tool-section">
             <div class="hash-generator-container">
                 <div class="column input-column">
-                    <h2 id="input-title">Input</h2>
+                    <h2>Input</h2>
                     <textarea id="text-input" placeholder="Type or paste your text here..."></textarea>
-                    
-                    <!-- Bcrypt specific controls, hidden by default -->
-                    <div id="bcrypt-controls" class="hidden">
-                        <div class="bcrypt-mode-selector">
-                            <label><input type="radio" name="bcrypt-mode" value="hash" checked> Hash</label>
-                            <label><input type="radio" name="bcrypt-mode" value="verify"> Verify</label>
-                        </div>
-                        <div id="bcrypt-cost-factor-wrapper">
-                            <label for="bcrypt-cost-factor">Cost Factor: <span id="cost-factor-value">10</span></label>
-                            <input type="range" id="bcrypt-cost-factor" min="4" max="15" value="10">
-                        </div>
-                        <div id="bcrypt-verify-input-wrapper" class="hidden">
-                             <label for="bcrypt-hash-input">Hash to Compare</label>
-                             <textarea id="bcrypt-hash-input" placeholder="Paste the full bcrypt hash here (e.g., $2a$10$...)"></textarea>
-                        </div>
-                    </div>
-                    
                     <div class="controls-container">
                         <div class="file-input-wrapper">
                             <label for="file-input" class="file-input-label">Upload File</label>
@@ -71,18 +57,18 @@
                                 <optgroup label="Common / Secure">
                                     <option value="SHA256" selected>SHA-256</option>
                                     <option value="SHA512">SHA-512</option>
-                                    <option value="SHA3-512">SHA3-512</option>
-                                </optgroup>
-                                <optgroup label="Password Hashing">
-                                    <option value="Bcrypt">Bcrypt (Hash & Verify)</option>
+                                    <option value="SHA3-512">SHA3-512</option>                                    
                                 </optgroup>
                                 <optgroup label="Legacy / Insecure">
-                                    <option value="MD5">MD5</option>
-                                    <option value="SHA1">SHA-1</option>
+                                    <option value="MD5">MD5 <span class="warning-icon" title="MD5 is cryptographically broken and should not be used for security purposes.">⚠️</span></option>
+                                    <option value="SHA1">SHA-1 <span class="warning-icon" title="SHA-1 is no longer considered secure against well-funded attackers.">⚠️</span></option>
                                 </optgroup>
                                 <optgroup label="Other">
                                     <option value="SHA224">SHA-224</option>
                                     <option value="SHA384">SHA-384</option>
+                                    <option value="SHA3-224">SHA3 (224-bit)</option>
+                                    <option value="SHA3-256">SHA3 (256-bit)</option>
+                                    <option value="SHA3-384">SHA3 (384-bit)</option>
                                     <option value="RIPEMD160">RipeMD-160</option>
                                 </optgroup>
                                 <optgroup label="Checksums (Non-Cryptographic)">
@@ -96,34 +82,34 @@
                 </div>
                 <div class="column action-column">
                     <button id="generate-btn">Generate</button>
-                    <div id="loader" class="hidden"></div>
                 </div>
                 <div class="column output-column">
-                    <h2 id="output-title">Hash Output</h2>
-                    <div id="output-wrapper">
-                        <textarea id="hash-output" readonly placeholder="Your generated hash will appear here..."></textarea>
-                    </div>
+                    <h2>Hash Output</h2>
+                    <textarea id="hash-output" readonly placeholder="Your generated hash will appear here..."></textarea>
                 </div>
             </div>
         </section>
-        
-        <!-- Learning Center and FAQ sections remain the same -->
+
+        <!-- Learning Center Section -->
         <section id="learning-center" class="content-section">
             <h2>Understanding Cryptographic Hashes</h2>
-            <p class="section-intro">A hash function is a cornerstone of modern cybersecurity... (Your content here)</p>
+            <p class="section-intro">A hash function is a cornerstone of modern cybersecurity. It's a mathematical algorithm that takes an input (like a file or a password) and produces a fixed-size string of characters, which is unique to that input. This output is called a "hash" or a "digest". Our tool allows you to explore this concept with the most widely used algorithms. Dive deeper into the world of hashing with our comprehensive articles:</p>
+            
             <div class="article-promo-grid">
-                <a href="/articles/what-is-hashing.html" class="article-promo-card">
+                 <a href="/articles/what-is-hashing.html" class="article-promo-card">
                     <h3>What is Hashing? A Beginner's Guide</h3>
-                    <p>Start here to understand the fundamental concepts...</p>
+                    <p>Start here to understand the fundamental concepts, properties, and common uses of hashing in an easy-to-understand way.</p>
                     <span class="read-more">Read Full Article →</span>
-                </a>
+                </a>  
+
                 <a href="/articles/what-is-bcrypt.html" class="article-promo-card">
                     <h3>What is Bcrypt? A Guide to Modern Password Hashing</h3>
-                    <p>Learn why fast hashes aren't enough for passwords...</p>
+                    <p>Learn why fast hashes aren't enough for passwords and how Bcrypt's deliberate slowness makes it a cornerstone of modern security.</p>
                     <span class="read-more">Read Full Article →</span>
-                </a>
+                </a>              
             </div>
-       <article> <!-- This is the old "Practical Use Cases" section, now integrated -->
+            
+            <article> <!-- This is the old "Practical Use Cases" section, now integrated -->
                 <h3>Practical Use Cases for a Hash Generator</h3>
                 <ul>
                     <li><strong>Verifying File Integrity:</strong> After downloading a file, compare its calculated hash with the one provided by the source. If they match, the file is not corrupt or altered.</li>
@@ -132,7 +118,15 @@
                     <li><strong>Data Indexing in Databases:</strong> Hash tables, a data structure that uses hashing, allow for incredibly fast data lookups, making them essential for high-performance databases.</li>
                     <li><strong>Blockchain Technology:</strong> Each block in a blockchain contains the hash of the previous block, creating a secure and immutable chain of transactions.</li>
                 </ul>
-            </article>            
+            </article>
+
+            <!-- Other articles from the original index.html can be condensed or linked as separate articles later -->
+            <!-- Example:
+            <article>
+                <h3>MD5 vs. SHA-256: Which One Should I Use?</h3>
+                <p>A brief comparison... <a href="/articles/md5-vs-sha256.html">Read more</a>.</p> 
+            </article>
+            -->
         </section>
 
         <!-- FAQ Section -->
