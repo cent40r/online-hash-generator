@@ -237,7 +237,6 @@ table tbody tr:nth-child(even) {
     margin-top: 5px;
 }
 
-/* Indicador de Càrrega (Loader) */
 #loader {
     border: 5px solid #f3f3f3; /* Gris clar */
     border-top: 5px solid var(--primary-color); /* Blau */
@@ -252,7 +251,6 @@ table tbody tr:nth-child(even) {
     100% { transform: rotate(360deg); }
 }
 
-/* Estils per als resultats de la verificació */
 .output-message {
     padding: 20px;
     border-radius: 5px;
@@ -277,17 +275,43 @@ table tbody tr:nth-child(even) {
     border: 1px solid #f5c6cb;
 }
 
-/* Assegura't que el .hidden amaga les coses correctament */
+
 .hidden {
     display: none !important;
 }
 
-/* --- Footer --- */
+
 footer { 
     text-align: center; margin-top: 3rem; padding: 2rem;
     border-top: 1px solid var(--border-color); color: #6c757d;
 }
 footer a { color: #6c757d; }
+
+.related-articles-list {
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+}
+.related-articles-list h4 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    color: #495057;
+}
+.related-articles-list ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+.related-articles-list li {
+    margin-bottom: 0.5rem;
+}
+.related-articles-list a {
+    text-decoration: none;
+    color: var(--primary-color);
+}
+.related-articles-list a:hover {
+    text-decoration: underline;
+}
 
 /* --- Responsive Design --- */
 @media (max-width: 900px) {
