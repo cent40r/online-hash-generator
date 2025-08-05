@@ -128,6 +128,22 @@ textarea:focus {
 .content-page .article-meta { color: #6c757d; margin-bottom: 2rem; font-style: italic; }
 .content-page article p, .content-page article li { font-size: 1.1rem; line-height: 1.7; margin-bottom: 1rem; }
 
+/* --- Styles for Code Blocks in Articles --- */
+pre {
+    background-color: #f4f4f4; /* Un fons gris clar per destacar */
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    padding: 1em;
+    overflow-x: auto; /* AQUESTA ÉS LA LÍNIA MÀGICA */
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.9em; /* Una mida una mica més petita per a la llegibilitat del codi */
+    white-space: pre; /* Manté els espais i els salts de línia del codi */
+}
+
+code {
+    font-family: 'Courier New', Courier, monospace;
+}
+
 /* Article Promotion on Index Page */
 .article-promo-grid {
     display: grid;
