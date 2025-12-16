@@ -15,24 +15,16 @@ const generateBtn = document.getElementById('generate-btn');
 const outputWrapper = document.getElementById('output-wrapper');
 const loader = document.getElementById('loader');
 
-// Control Groups
 const bcryptControls = document.getElementById('bcrypt-controls');
 const argon2Controls = document.getElementById('argon2-controls');
-
-// Bcrypt Elements
 const bcryptModeRadios = document.querySelectorAll('input[name="bcrypt-mode"]');
-const bcryptCostFactorWrapper = document.getElementById('bcrypt-cost-factor-wrapper');
 const bcryptCostFactorSlider = document.getElementById('bcrypt-cost-factor');
 const costFactorValueSpan = document.getElementById('cost-factor-value');
 const bcryptVerifyInputWrapper = document.getElementById('bcrypt-verify-input-wrapper');
-
-// Argon2 Elements
 const argon2ModeRadios = document.querySelectorAll('input[name="argon2-mode"]');
 const argon2HashOptions = document.getElementById('argon2-hash-options');
 const argon2VerifyInputWrapper = document.getElementById('argon2-verify-input-wrapper');
 const argon2GenerateSaltBtn = document.getElementById('argon2-generate-salt');
-
-// UI Titles
 const inputTitle = document.getElementById('input-title');
 const outputTitle = document.getElementById('output-title');
 
@@ -48,6 +40,10 @@ function generateRandomSalt(bytes = 16) { const buffer = new Uint8Array(bytes); 
 // --- Dynamic Library Loaders ---
 function loadScript(src) {
     return new Promise((resolve, reject) => {
+        if (document.querySelector(`script[src="${src}"]`)) {
+            resolve();
+            return;
+        }
         const script = document.createElement('script');
         script.src = src;
         script.onload = resolve;
@@ -67,11 +63,14 @@ async function loadBcrypt() {
         showLoader(false);
     }
 }
+
+// CORRECCIÓ: Canvi de la URL de la llibreria d'Argon2
 async function loadArgon2() {
     if (argon2js) return argon2js;
     showLoader(true);
     try {
-        await loadScript('https://cdn.jsdelivr.net/npm/argon2-browser/lib/argon2.min.js');
+        // Aquesta URL apunta a un fitxer "bundle" que funciona directament al navegador.
+        await loadScript('https://cdn.jsdelivr.net/npm/argon2-browser/dist/argon2-bundle.min.js');
         argon2js = window.argon2;
         return argon2js;
     } finally {
@@ -87,7 +86,7 @@ function updateUIForAlgorithm(algorithm) {
     argon2Controls.classList.toggle('hidden', !isArgon2);
     fileInput.parentElement.classList.toggle('hidden', isBcrypt || isArgon2);
 
-    if (!isBcrypt && !isArgon2) { // Standard Hash
+    if (!isBcrypt && !isArgon2) {
         inputTitle.textContent = 'Input';
         outputTitle.textContent = 'Hash Output';
         textInput.placeholder = 'Type or paste your text here...';
@@ -101,9 +100,10 @@ function updateUIForAlgorithm(algorithm) {
 }
 
 function updateUIForBcryptMode() {
+    // ... (Aquesta funció no canvia)
     const selectedMode = document.querySelector('input[name="bcrypt-mode"]:checked').value;
     const isHashMode = selectedMode === 'hash';
-    bcryptCostFactorWrapper.classList.toggle('hidden', !isHashMode);
+    document.getElementById('bcrypt-cost-factor-wrapper').classList.toggle('hidden', !isHashMode);
     bcryptVerifyInputWrapper.classList.toggle('hidden', isHashMode);
     outputTitle.textContent = isHashMode ? 'Bcrypt Hash Output' : 'Verification Result';
     inputTitle.textContent = isHashMode ? 'Password to Hash' : 'Password to Check';
@@ -113,6 +113,7 @@ function updateUIForBcryptMode() {
 }
 
 function updateUIForArgon2Mode() {
+    // ... (Aquesta funció no canvia)
     const selectedMode = document.querySelector('input[name="argon2-mode"]:checked').value;
     const isHashMode = selectedMode === 'hash';
     argon2HashOptions.classList.toggle('hidden', !isHashMode);
@@ -145,11 +146,10 @@ async function handleGenerateClick() {
 }
 
 function handleStandardHash() {
+    // ... (Aquesta funció no canvia)
     const inputText = textInput.value;
     const algorithm = algorithmSelect.value;
-    if (inputText.length === 0) {
-        alert('Input is empty.'); return;
-    }
+    if (inputText.length === 0) { alert('Input is empty.'); return; }
     try {
         let hash;
         switch (algorithm) {
@@ -179,6 +179,7 @@ function handleStandardHash() {
 }
 
 async function handleBcrypt(bcrypt) {
+    // ... (Aquesta funció no canvia)
     const selectedMode = document.querySelector('input[name="bcrypt-mode"]:checked').value;
     const plaintext = textInput.value;
     if (!plaintext) { alert('Please enter a password.'); return; }
@@ -207,6 +208,7 @@ async function handleArgon2(argon2) {
     if (selectedMode === 'hash') {
         const salt = document.getElementById('argon2-salt').value || generateRandomSalt();
         document.getElementById('argon2-salt').value = salt;
+        // CORRECCIÓ: La llibreria bundle espera els paràmetres lleugerament diferents.
         const options = {
             pass: plaintext,
             salt: salt,
@@ -217,6 +219,7 @@ async function handleArgon2(argon2) {
             type: argon2.ArgonType[document.getElementById('argon2-type').value],
         };
         try {
+            // La crida a la funció és directament sobre l'objecte `argon2`
             const hashResult = await argon2.hash(options);
             if (!document.getElementById('hash-output')) { outputWrapper.innerHTML = ''; outputWrapper.appendChild(createOutputTextarea()); }
             document.getElementById('hash-output').value = hashResult.encoded;
@@ -233,15 +236,13 @@ async function handleArgon2(argon2) {
     }
 }
 
-// --- Initializer Function ---
+// --- Initializer and Event Listeners Setup ---
 function initialize() {
-    // Event Listeners for elements that always exist
+    // ... (Aquesta funció no canvia)
     algorithmSelect.addEventListener('change', () => updateUIForAlgorithm(algorithmSelect.value));
     generateBtn.addEventListener('click', handleGenerateClick);
-    
     bcryptModeRadios.forEach(radio => radio.addEventListener('change', updateUIForBcryptMode));
     bcryptCostFactorSlider.addEventListener('input', () => costFactorValueSpan.textContent = bcryptCostFactorSlider.value);
-    
     argon2ModeRadios.forEach(radio => radio.addEventListener('change', updateUIForArgon2Mode));
     argon2GenerateSaltBtn.addEventListener('click', () => document.getElementById('argon2-salt').value = generateRandomSalt());
 
@@ -249,39 +250,27 @@ function initialize() {
         const file = event.target.files[0];
         if (!file) return;
         const MAX_FILE_SIZE_MB = 10;
-        if (file.size > MAX_FILE_SIZE_MB * 1024 * 1024) {
-            alert(`File is too large. Max size: ${MAX_FILE_SIZE_MB}MB.`);
-            clearFile(); return;
-        }
+        if (file.size > MAX_FILE_SIZE_MB * 1024 * 1024) { alert(`File is too large. Max size: ${MAX_FILE_SIZE_MB}MB.`); clearFile(); return; }
         const reader = new FileReader();
         reader.onload = (e) => {
             textInput.value = e.target.result;
             fileNameSpan.textContent = file.name;
             fileInfo.classList.remove('hidden');
-            // Check if clearFileBtn exists now and add listener
             const clearBtn = document.getElementById('clear-file-btn');
-            if(clearBtn) {
-                clearBtn.addEventListener('click', clearFile);
-            }
+            if(clearBtn) { clearBtn.addEventListener('click', clearFile); }
         };
         reader.onerror = () => { alert('Error reading file.'); clearFile(); };
         reader.readAsText(file);
     });
-
-    // CORRECCIÓ: Funció per esborrar el fitxer, separada per evitar errors de referència
+    
     function clearFile() {
-        fileInput.value = ''; // Resets the input so the same file can be selected again
+        fileInput.value = '';
         if(fileNameSpan) fileNameSpan.textContent = '';
         if(fileInfo) fileInfo.classList.add('hidden');
     }
-    
-    // Add listener to clear button only if it exists at load time (it doesn't, so we add it when file is loaded)
     const initialClearBtn = document.getElementById('clear-file-btn');
-    if (initialClearBtn) {
-        initialClearBtn.addEventListener('click', clearFile);
-    }
+    if (initialClearBtn) { initialClearBtn.addEventListener('click', clearFile); }
     
-    // Initial UI setup on page load
     updateUIForAlgorithm(algorithmSelect.value);
 }
 
