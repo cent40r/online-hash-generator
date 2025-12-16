@@ -8,9 +8,9 @@
     <link rel="canonical" href="https://onlinehashgenerator.com/" />
     <link rel="stylesheet" href="style.css">
     
-    <!-- Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>
-    <!-- bcrypt.js and argon2.js will be loaded dynamically by script.js when needed -->
+    <script src="https://cdn.jsdelivr.net/npm/bcryptjs@2.4.3/dist/bcrypt.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/argon2-browser/dist/argon2-bundle.min.js"></script>
 
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-KR2QFJQ6PR"></script>
@@ -40,7 +40,6 @@
                     <h2 id="input-title">Input</h2>
                     <textarea id="text-input" placeholder="Type or paste your text here..."></textarea>
                     
-                    <!-- Bcrypt specific controls, hidden by default -->
                     <div id="bcrypt-controls" class="advanced-controls hidden">
                         <div class="mode-selector">
                             <label><input type="radio" name="bcrypt-mode" value="hash" checked> Hash</label>
@@ -56,7 +55,6 @@
                         </div>
                     </div>
                     
-                    <!-- Argon2 specific controls, hidden by default -->
                     <div id="argon2-controls" class="advanced-controls hidden">
                         <div class="mode-selector">
                             <label><input type="radio" name="argon2-mode" value="hash" checked> Hash</label>
@@ -158,12 +156,48 @@
             </div>
         </section>
         
-        <!-- Learning Center and FAQ sections remain the same -->
         <section id="learning-center" class="content-section">
-            <!-- Your content here -->
+            <h2>Understanding Cryptographic Hashes</h2>
+            <p class="section-intro">A hash function is a cornerstone of modern cybersecurity. It's a mathematical algorithm that takes an input (like a file or a password) and produces a fixed-size string of characters, which is unique to that input. This output is called a "hash" or a "digest". Our tool allows you to explore this concept with the most widely used algorithms. Dive deeper into the world of hashing with our comprehensive articles:</p>
+            <div class="article-promo-grid">
+                 <a href="/articles/what-is-hashing.html" class="article-promo-card">
+                    <h3>What is Hashing? A Beginner's Guide</h3>
+                    <p>Start here to understand the fundamental concepts, properties, and common uses of hashing in an easy-to-understand way.</p>
+                    <span class="read-more">Read Full Article &rarr;</span>
+                </a>
+                <a href="/articles/what-is-bcrypt.html" class="article-promo-card">
+                    <h3>What is Bcrypt? A Guide to Modern Password Hashing</h3>
+                    <p>Learn why fast hashes aren't enough for passwords and how Bcrypt's deliberate slowness makes it a cornerstone of modern security.</p>
+                    <span class="read-more">Read Full Article &rarr;</span>
+                </a>
+            </div>
+            <div class="related-articles-list">
+                <h4>Related Topics:</h4>
+                <ul>
+                    <li><a href="/articles/what-is-hashing.html">The fundamentals of hashing explained</a></li>
+                    <li><a href="/articles/what-is-bcrypt.html">Why Bcrypt is essential for password security</a></li>
+                </ul>
+            </div>
         </section>
+
         <section id="faq-section" class="content-section">
-            <!-- Your content here -->
+            <h2>Frequently Asked Questions (FAQ)</h2>
+            <div class="faq-item">
+                <h3>1. Is this online hash generator safe to use?</h3>
+                <p>Yes. Our tool is 100% client-side, which means all hashing calculations happen directly in your browser on your computer. No data or files you input are ever sent to our servers. Your privacy and data security are guaranteed.</p>
+            </div>
+            <div class="faq-item">
+                <h3>2. What is the difference between Hashing and Encryption?</h3>
+                <p>Hashing is a one-way process; you cannot reverse a hash to get the original input. Encryption is a two-way process; data that is encrypted can be decrypted back into its original form using the correct key. Hashing is used for integrity and verification, while encryption is used for confidentiality.</p>
+            </div>
+            <div class="faq-item">
+                <h3>3. Can two different files have the same hash?</h3>
+                <p>For a secure algorithm like SHA-256, it is theoretically possible but statistically impossible. This event is called a "hash collision". While collisions have been demonstrated for older, broken algorithms like MD5, it is considered computationally infeasible to find a collision for modern algorithms like SHA-256.</p>
+            </div>
+            <div class="faq-item">
+                <h3>4. Why are some hashes longer than others?</h3>
+                <p>The length of a hash is determined by the algorithm. For example, MD5 always produces a 128-bit hash, while SHA-256 always produces a 256-bit hash. A longer hash provides a larger number of possible combinations, making it more secure against brute-force and collision attacks.</p>
+            </div>
         </section>
     </main>
     
