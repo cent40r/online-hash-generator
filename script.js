@@ -65,9 +65,6 @@ const argon2GenerateSaltBtn = document.getElementById('argon2-generate-salt');
 const inputTitle = document.getElementById('input-title');
 const outputTitle = document.getElementById('output-title');
 
-const bcryptjs = window.dcodeIO.bcrypt;
-const argon2 = window.argon2;
-
 function showLoader(show) {
     loader.classList.toggle('hidden', !show);
     generateBtn.classList.toggle('hidden', show);
@@ -208,6 +205,12 @@ function handleStandardHash() {
 }
 
 async function handleBcrypt() {
+    if (!window.dcodeIO || !window.dcodeIO.bcrypt) {
+        alert('Bcrypt library has not loaded correctly. Please refresh the page.');
+        showLoader(false);
+        return;
+    }
+    const bcryptjs = window.dcodeIO.bcrypt;
     const selectedMode = document.querySelector('input[name="bcrypt-mode"]:checked').value;
     const plaintext = textInput.value;
     if (!plaintext) {
@@ -250,6 +253,12 @@ async function handleBcrypt() {
 }
 
 async function handleArgon2() {
+    if (!window.argon2) {
+        alert('Argon2 library has not loaded correctly. Please refresh the page.');
+        showLoader(false);
+        return;
+    }
+    const argon2 = window.argon2;
     const selectedMode = document.querySelector('input[name="argon2-mode"]:checked').value;
     const plaintext = textInput.value;
     if (!plaintext) {
@@ -317,6 +326,12 @@ function initialize() {
     argon2ModeRadios.forEach(radio => radio.addEventListener('change', updateUIForArgon2Mode));
     argon2GenerateSaltBtn.addEventListener('click', () => document.getElementById('argon2-salt').value = generateRandomSalt());
 
+    function clearFile() {
+        fileInput.value = '';
+        if (fileNameSpan) fileNameSpan.textContent = '';
+        if (fileInfo) fileInfo.classList.add('hidden');
+    }
+
     fileInput.addEventListener('change', (event) => {
         const file = event.target.files[0];
         if (!file) return;
@@ -342,12 +357,6 @@ function initialize() {
         };
         reader.readAsText(file);
     });
-
-    function clearFile() {
-        fileInput.value = '';
-        if (fileNameSpan) fileNameSpan.textContent = '';
-        if (fileInfo) fileInfo.classList.add('hidden');
-    }
 
     const initialClearBtn = document.getElementById('clear-file-btn');
     if (initialClearBtn) {
