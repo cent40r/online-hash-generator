@@ -205,12 +205,12 @@ function handleStandardHash() {
 }
 
 async function handleBcrypt() {
-    if (!window.dcodeIO || !window.dcodeIO.bcrypt) {
-        alert('Bcrypt library has not loaded correctly. Please refresh the page.');
+    if (typeof dcodeIO === 'undefined' || typeof dcodeIO.bcrypt === 'undefined') {
+        alert('Bcrypt library has not loaded correctly. Please check your connection or ad blocker.');
         showLoader(false);
         return;
     }
-    const bcryptjs = window.dcodeIO.bcrypt;
+    const bcryptjs = dcodeIO.bcrypt;
     const selectedMode = document.querySelector('input[name="bcrypt-mode"]:checked').value;
     const plaintext = textInput.value;
     if (!plaintext) {
@@ -252,15 +252,34 @@ async function handleBcrypt() {
     }
 }
 
+// ─── FIX: helpers for Argon2 salt handling ───────────────────────────────────
+
+/**
+ * Converts a hex string (e.g. "a3f8b2...") into a Uint8Array of real bytes.
+ * argon2-browser requires a Uint8Array when the salt originates from a hex
+ * string; passing the hex string directly makes the library treat each hex
+ * character as a UTF-8 byte, producing a semantically wrong (but non-crashing)
+ * salt that makes the encoded hash unverifiable with the displayed salt value.
+ */
+function hexToUint8Array(hex) {
+    const bytes = new Uint8Array(hex.length / 2);
+    for (let i = 0; i < bytes.length; i++) {
+        bytes[i] = parseInt(hex.slice(i * 2, i * 2 + 2), 16);
+    }
+    return bytes;
+}
+
+// ─── FIX: rewritten handleArgon2 ─────────────────────────────────────────────
 async function handleArgon2() {
-    if (!window.argon2) {
-        alert('Argon2 library has not loaded correctly. Please refresh the page.');
+    if (typeof argon2 === 'undefined') {
+        alert('Argon2 library has not loaded correctly. Please check your connection or ad blocker.');
         showLoader(false);
         return;
     }
-    const argon2 = window.argon2;
+
     const selectedMode = document.querySelector('input[name="argon2-mode"]:checked').value;
     const plaintext = textInput.value;
+
     if (!plaintext) {
         alert('Please enter a password.');
         showLoader(false);
@@ -269,24 +288,36 @@ async function handleArgon2() {
 
     if (selectedMode === 'hash') {
         try {
-            const salt = document.getElementById('argon2-salt').value || generateRandomSalt();
-            document.getElementById('argon2-salt').value = salt;
-            
-            const variantMap = { 'argon2id': argon2.ArgonType.Argon2id, 'argon2i': argon2.ArgonType.Argon2i, 'argon2d': argon2.ArgonType.Argon2d };
-            const variantStr = document.getElementById('argon2-type').value;
+            // Generate a random salt if the field is empty and populate the UI field.
+            let saltHex = document.getElementById('argon2-salt').value.trim();
+            if (!saltHex) {
+                saltHex = generateRandomSalt();
+                document.getElementById('argon2-salt').value = saltHex;
+            }
+
+            // FIX 1: Convert the hex salt string to a Uint8Array of real bytes.
+            // The library interprets a plain string as UTF-8 characters, so
+            // passing the hex string directly produces wrong/unverifiable hashes.
+            const saltBytes = hexToUint8Array(saltHex);
+
+            const variantMap = {
+                'argon2id': argon2.ArgonType.Argon2id,
+                'argon2i':  argon2.ArgonType.Argon2i,
+                'argon2d':  argon2.ArgonType.Argon2d,
+            };
 
             const options = {
-                pass: plaintext,
-                salt: salt,
-                time: parseInt(document.getElementById('argon2-iterations').value, 10),
-                mem: parseInt(document.getElementById('argon2-mem').value, 10),
+                pass:        plaintext,
+                salt:        saltBytes,   // ← Uint8Array, not a raw hex string
+                time:        parseInt(document.getElementById('argon2-iterations').value, 10),
+                mem:         parseInt(document.getElementById('argon2-mem').value, 10),
                 parallelism: parseInt(document.getElementById('argon2-parallelism').value, 10),
-                hashLen: parseInt(document.getElementById('argon2-hash-len').value, 10),
-                type: variantMap[variantStr],
+                hashLen:     parseInt(document.getElementById('argon2-hash-len').value, 10),
+                type:        variantMap[document.getElementById('argon2-type').value],
             };
-            
+
             const hashResult = await argon2.hash(options);
-            
+
             let outputTextarea = document.getElementById('hash-output');
             if (!outputTextarea) {
                 outputWrapper.innerHTML = '';
@@ -300,23 +331,42 @@ async function handleArgon2() {
         } finally {
             showLoader(false);
         }
+
     } else {
-        const encodedHash = document.getElementById('argon2-hash-input').value;
+        // ── Verify mode ──────────────────────────────────────────────────────
+        const encodedHash = document.getElementById('argon2-hash-input').value.trim();
         if (!encodedHash) {
             alert('Please enter the encoded hash to compare.');
             showLoader(false);
             return;
         }
+
         try {
-            const match = await argon2.verify({ pass: plaintext, encoded: encodedHash });
-            showOutputMessage(match ? 'success' : 'error', match ? '✅ Match!' : '❌ No Match');
+            // FIX 2: argon2-browser's verify() resolves with *undefined* on
+            // success and *rejects* on mismatch — it never resolves with false.
+            // The original code did `match ? 'success' : 'error'` on the
+            // resolved value, which was always undefined (falsy), so a correct
+            // password would be shown as "❌ No Match".  Mismatches fell into
+            // the catch block and showed "Verification Error" instead of
+            // "❌ No Match".  The correct pattern is: resolve → match,
+            // reject with code -35 (ARGON2_VERIFY_MISMATCH) → no match,
+            // reject with any other code → real error.
+            await argon2.verify({ pass: plaintext, encoded: encodedHash });
+            showOutputMessage('success', '✅ Match!');
         } catch (e) {
-            showOutputMessage('error', '❌ Verification Error: ' + e.message);
+            // error code -35 is ARGON2_VERIFY_MISMATCH (password is wrong but
+            // the hash itself is valid). Any other code is a real error.
+            if (e.code === -35) {
+                showOutputMessage('error', '❌ No Match');
+            } else {
+                showOutputMessage('error', '❌ Verification Error: ' + e.message);
+            }
         } finally {
             showLoader(false);
         }
     }
 }
+// ─── END FIX ──────────────────────────────────────────────────────────────────
 
 function initialize() {
     algorithmSelect.addEventListener('change', () => updateUIForAlgorithm(algorithmSelect.value));
