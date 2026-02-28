@@ -11,9 +11,10 @@
     <!-- Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bcryptjs@2.4.3/dist/bcrypt.min.js"></script>
-    
-    <!-- URL D'ARGON2 CORREGIDA -->
-    <script src="https://cdn.jsdelivr.net/npm/argon2-browser@1.18.0/dist/argon2-bundle.min.js"></script>
+    <!-- FIXED: corrected CDN (jsDelivr does not host argon2-bundled.min.js;
+         the file only exists on cdnjs) and corrected filename
+         (argon2-bundle.min.js → argon2-bundled.min.js) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/argon2-browser/1.18.0/argon2-bundled.min.js"></script>
 
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-KR2QFJQ6PR"></script>
