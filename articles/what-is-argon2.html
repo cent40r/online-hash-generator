@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What is Argon2? The Modern Standard for Password Hashing | Online Hash Generator</title>
+    <meta name="description" content="Bcrypt solved the speed problem. Argon2 solves everything else. Learn why the Password Hashing Competition winner is now the strongest tool available for protecting user credentials.">
+    <link rel="canonical" href="https://onlinehashgenerator.com/articles/what-is-argon2.html" />
+    <link rel="stylesheet" href="/style.css">
+    
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "What is Argon2? The Modern Standard for Password Hashing",
+      "author": { "@type": "Organization", "name": "Online Hash Generator Team" },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Online Hash Generator",
+        "logo": { "@type": "ImageObject", "url": "https://onlinehashgenerator.com/images/logo.webp" }
+      },
+      "datePublished": "2025-06-21",
+      "dateModified": "2025-06-21",
+      "image": "https://onlinehashgenerator.com/images/password-hashing-evolution-v2.webp"
+    }
+    </script>
+    
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-KR2QFJQ6PR"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-KR2QFJQ6PR');
+    </script>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1><a href="/" style="text-decoration:none; color:inherit;">Online Hash Generator</a></h1>
+            <nav>
+                <a href="/#tool-section">Tool</a>
+                <a href="/#learning-center">Learn</a>
+                <a href="/#faq-section">FAQ</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-container content-page">
+        <article>
+            <h1>What is Argon2? The Modern Standard for Password Hashing</h1>
+            <p class="article-meta">Published: March 01, 2026 · 12 min read</p>
+            <p>If you've read our articles on <a href="/articles/what-is-hashing.html">what hashing is</a> and <a href="/articles/what-is-bcrypt.html">how Bcrypt works</a>, you already understand the two fundamental rules of password security: you must never store passwords in plain text, and the hashing function you use must be deliberately slow to resist brute-force attacks.</p>
+            <p>For over two decades, Bcrypt was the gold standard for meeting those requirements. It introduced the concept of an adaptive cost factor — a dial you could turn to make the hash slower as hardware got faster. This was revolutionary in 1999, and Bcrypt remains a solid, well-tested choice today.</p>
+            <p>But the threat landscape continued to evolve. The rise of GPU-accelerated cracking tools and, more recently, specialized ASIC hardware created a new category of attack that Bcrypt wasn't designed to resist. The problem isn't that Bcrypt is "broken" — it's that it only consumes CPU time, and CPU time has become very cheap to buy in bulk.</p>
+            <p>This is the problem that Argon2 was built to solve.</p>
+
+            <figure class="article-image">
+                <img src="/images/password-hashing-evolution-v2.webp" alt="A timeline graphic showing the evolution of password hashing: MD5, SHA-256, Bcrypt, scrypt, and finally the PHC winner, Argon2.">
+            </figure>
+
+            <h2>What is Argon2?</h2>
+            <p>Argon2 is a cryptographic key derivation function designed specifically for hashing passwords and deriving cryptographic keys. It was created by Alex Biryukov, Daniel Dinu, and Dmitry Khovratovich at the University of Luxembourg, and it won the <strong>Password Hashing Competition (PHC)</strong> in July 2015 — a rigorous, multi-year open process that evaluated dozens of candidate algorithms against real-world attack scenarios.</p>
+            <p>The core innovation of Argon2 over its predecessors is that it is <strong>memory-hard</strong>. While Bcrypt is CPU-hard (consuming processor cycles), Argon2 is specifically engineered to require a large, configurable amount of RAM during its computation. This distinction fundamentally changes the economics of attacking it.</p>
+            <div class="callout">
+                <p><strong>Why does memory matter so much?</strong> A GPU or ASIC can have thousands of processing cores running in parallel. But RAM is expensive and physically large. By requiring a lot of memory, Argon2 ensures that an attacker cannot simply throw more cores at the problem. They need more RAM for every parallel attempt, and RAM costs money.</p>
+            </div>
+
+            <h2>The Three Variants of Argon2</h2>
+            <p>Argon2 comes in three flavors, each designed for a specific threat model. Understanding the differences is important for choosing the right one for your application.</p>
+            
+            <figure class="article-image">
+                <img src="/images/argon2-variants-comparison.webp" alt="A three-column comparison diagram showing Argon2d for GPU resistance, Argon2i for side-channel resistance, and Argon2id as the recommended hybrid.">
+            </figure>
+
+            <h3>Argon2d — Data-Dependent Memory Access</h3>
+            <p>Uses a data-dependent memory access pattern, which maximizes resistance against GPU and ASIC cracking attacks. However, this pattern theoretically makes it susceptible to side-channel attacks. Best suited for applications where side-channel attacks are not a realistic concern, such as cryptocurrency proof-of-work functions.</p>
+            <h3>Argon2i — Data-Independent Memory Access</h3>
+            <p>Uses a data-independent memory access pattern, which eliminates side-channel timing vulnerabilities. This makes it the correct choice when the code runs in an environment where an attacker might observe memory access patterns. Slightly more vulnerable to GPU attacks than Argon2d, but still far stronger than Bcrypt.</p>
+            <h3>Argon2id — Hybrid (Recommended)</h3>
+            <p>Combines both approaches: the first half of the memory pass uses data-independent access (for side-channel resistance), and the second half uses data-dependent access (for GPU resistance). This hybrid design gives the best practical security for the widest range of attack scenarios. It is the variant recommended by the OWASP Foundation and RFC 9106 for general-purpose password hashing.</p>
+            
+            <div class="callout callout-success">
+                <p><strong>✅ Our Recommendation:</strong> For virtually all web applications, APIs, and user authentication systems, use <strong>Argon2id</strong>. It is the variant we use in our <a href="/#tool-section">online hash generator tool</a>.</p>
+            </div>
+            
+            <h2>The Three Cost Parameters</h2>
+            <p>Like Bcrypt's cost factor, Argon2 gives you levers to tune how expensive each hash operation is. But instead of one dial, Argon2 gives you three.</p>
+            <h3>1. Memory Cost (m)</h3>
+            <p>This parameter controls how much RAM Argon2 allocates during the hashing operation, specified in kilobytes. A value of <code>65536</code> means the function will allocate and fill 64 MB of memory for every single hash.</p>
+            <h3>2. Time Cost (t)</h3>
+            <p>This controls the number of passes Argon2 makes over the memory block. More passes means more time spent computing. It's roughly analogous to Bcrypt's cost factor.</p>
+            <h3>3. Parallelism (p)</h3>
+            <p>This specifies how many independent memory lanes and threads Argon2 can use. Setting this to match the number of CPU cores available allows you to use your server's processing power more efficiently.</p>
+            
+            <h2>Argon2 vs. Bcrypt vs. scrypt: A Direct Comparison</h2>
+            <div class="comparison-table-container">
+                <table>
+                    <thead><tr><th>Property</th><th>Bcrypt</th><th>scrypt</th><th>Argon2id</th></tr></thead>
+                    <tbody>
+                        <tr><td>Deliberately slow</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
+                        <tr><td>Automatic salting</td><td>Yes</td><td>Manual</td><td>Manual</td></tr>
+                        <tr><td>Memory-hard</td><td>No</td><td>Yes</td><td>Yes</td></tr>
+                        <tr><td>Parallelism control</td><td>No</td><td>Limited</td><td>Configurable</td></tr>
+                        <tr><td>GPU resistance</td><td>Moderate</td><td>Good</td><td>Excellent</td></tr>
+                        <tr><td>Side-channel resistance</td><td>Partial</td><td>Partial</td><td>Yes</td></tr>
+                        <tr><td>Password length limit</td><td>72 bytes</td><td>None</td><td>None</td></tr>
+                        <tr><td>PHC winner / standardized</td><td>No</td><td>No</td><td>Yes (RFC 9106)</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="callout callout-warning">
+                <p><strong>Note on Bcrypt's 72-byte limit:</strong> Bcrypt truncates passwords longer than 72 bytes. In practice, this rarely affects real users, but it's a known limitation. Argon2 has no such restriction.</p>
+            </div>
+
+            <h2>What an Argon2 Hash Looks Like</h2>
+            <p>Like Bcrypt, Argon2 stores all the information needed for verification in a single, self-contained string.</p>
+            <pre><code>$argon2id$v=19$m=65536,t=3,p=4$c29tZXJhbmRvbXNhbHQ$RdescudvJCsgt3ub+b+dWRWJTmaaJObG</code></pre>
+            
+            <h2>Frequently Asked Questions</h2>
+            <h3>Is Argon2 safe to use in production today?</h3>
+            <p>Yes. Argon2 has been publicly scrutinized for over a decade, was formally standardized as RFC 9106 in 2021, and is recommended by OWASP and NIST. It is actively used by major security-focused projects.</p>
+            <h3>Should I migrate my existing Bcrypt hashes to Argon2?</h3>
+            <p>A direct, immediate migration is not necessary if your Bcrypt cost factor is current. The recommended approach is a gradual, transparent migration: at each successful user login, re-hash their password with Argon2 and replace the stored Bcrypt hash.</p>
+            <h3>Is Argon2 available in browsers for client-side hashing?</h3>
+            <p>Yes — WebAssembly builds of Argon2 are available and work in modern browsers. Our <a href="/#tool-section">online tool on this site</a> uses a WASM build of Argon2 precisely because we never want your input to leave your browser.</p>
+
+            <h2>Conclusion: The Right Choice for New Systems</h2>
+            <p>The history of password hashing is a history of the security community staying one step ahead of increasingly powerful adversaries. Argon2id represents the current state of the art: it is deliberately slow, memory-hard, parallelism-aware, resistant to side-channel attacks, and formally standardized. If you are building a new authentication system today, there is no technical reason to choose anything else.</p>
+            
+            <div class="article-footer">
+                <a class="footer-link" href="/articles/what-is-bcrypt.html">
+                  <div class="fl-label">&larr; Previous article</div>
+                  <div class="fl-title">What is Bcrypt? A Guide to Modern Password Hashing</div>
+                </a>
+                <a class="footer-link" href="/">
+                  <div class="fl-label">Back to</div>
+                  <div class="fl-title">The Hashing Tool</div>
+                </a>
+              </div>
+        </article>
+    </main>
+    
+    <footer>
+        <p>&copy; 2026 onlinehashgenerator.com - All Rights Reserved.</p>
+        <p><a href="/privacy.html">Privacy Policy</a> | <a href="/terms.html">Terms and Conditions</a></p>
+    </footer>
+</body>
+</html>
