@@ -1,3 +1,5 @@
+--- START OF FILE what-is-argon2.html ---
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -38,6 +40,14 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5409295794067694"
      crossorigin="anonymous"></script>
 
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://onlinehashgenerator.com/favicon/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="https://onlinehashgenerator.com/favicon/favicon.svg" />
+    <link rel="shortcut icon" href="https://onlinehashgenerator.com/favicon/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="https://onlinehashgenerator.com/favicon/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="MyWebSite" />
+    <link rel="manifest" href="https://onlinehashgenerator.com/favicon/site.webmanifest" />
+
 </head>
 <body>
     <header>
@@ -62,6 +72,7 @@
 
             <figure class="article-image">
                 <img src="/images/password-hashing-evolution-v2.webp" alt="A timeline graphic showing the evolution of password hashing: MD5, SHA-256, Bcrypt, scrypt, and finally the PHC winner, Argon2.">
+                <figcaption>The evolution of password hashing algorithms from fast and insecure to slow, memory-hard, and adaptive.</figcaption>
             </figure>
 
             <h2>What is Argon2?</h2>
@@ -76,6 +87,7 @@
             
             <figure class="article-image">
                 <img src="/images/argon2-variants-comparison.webp" alt="A three-column comparison diagram showing Argon2d for GPU resistance, Argon2i for side-channel resistance, and Argon2id as the recommended hybrid.">
+                <figcaption>A comparison of Argon2 variants and their primary protections.</figcaption>
             </figure>
 
             <h3>Argon2d — Data-Dependent Memory Access</h3>
@@ -98,6 +110,11 @@
             <h3>3. Parallelism (p)</h3>
             <p>This specifies how many independent memory lanes and threads Argon2 can use. Setting this to match the number of CPU cores available allows you to use your server's processing power more efficiently.</p>
             
+            <figure class="article-image">
+                <img src="/images/argon2-internal-structure.webp" alt="A technical diagram of Argon2's internal structure showing a grid of memory blocks, inputs for password, salt, and parameters, and the final hash output.">
+                <figcaption>The internal structure of Argon2, demonstrating its memory-hard design.</figcaption>
+            </figure>
+
             <h2>Argon2 vs. Bcrypt vs. scrypt: A Direct Comparison</h2>
             <div class="comparison-table-container">
                 <table>
